@@ -1,0 +1,11 @@
+.fancy-card {
+    border: 2px solid #dee2e6;
+    background: linear-gradient(145deg, #ffffff, #f1f1f1);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .fancy-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  }
+  
