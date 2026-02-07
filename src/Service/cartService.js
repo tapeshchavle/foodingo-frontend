@@ -1,5 +1,5 @@
 import axios from "axios";
-const APP_URL = "https://foodingo.onrender.com";
+const APP_URL = "https://foodingo-api-awasc8h4d7d7cmft.centralindia-01.azurewebsites.net";
 export const addFood = async (foodId, jwt) => {
   const response = await axios.post(
     `${APP_URL}/api/cart`,

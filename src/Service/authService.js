@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-const APP_URL = "https://foodingo.onrender.com";
+const APP_URL = "https://foodingo-api-awasc8h4d7d7cmft.centralindia-01.azurewebsites.net";
 
 export const registerUser = async (newUser) => {
   try {
@@ -15,13 +15,13 @@ export const registerUser = async (newUser) => {
 };
 
 export const login = async (data) => {
-    console.log("from func",data);
-    
+  console.log("from func", data);
+
   try {
     const response = await axios.post(
-      `${APP_URL}/api/user/login`,data);
+      `${APP_URL}/api/user/login`, data);
     return response;
   } catch (error) {
-    toast.error("User Id and password not found"); 
+    toast.error("User Id and password not found");
   }
 };

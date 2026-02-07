@@ -9,7 +9,7 @@ const PlaceOrder = () => {
   const { foodList, quantities, setQuantities } = useContext(StoreContext);
   const cartItems = foodList.filter((food) => quantities[food.id] > 0);
   const token = localStorage.getItem("token");
-   const APP_URL = "https://foodingo.onrender.com";
+  const APP_URL = "https://foodingo-api-awasc8h4d7d7cmft.centralindia-01.azurewebsites.net";
   const navigate = useNavigate();
 
   const subtotal = cartItems.reduce(
