@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
-import "./placeorder.css";
+import React, { useContext, useState, useEffect } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { RAZORPAY_KEY } from "../../util/constants.js";
 import { useNavigate } from "react-router-dom";
+import { CreditCard, MapPin, Truck } from "lucide-react";
+
 const PlaceOrder = () => {
   const { foodList, quantities, setQuantities } = useContext(StoreContext);
   const cartItems = foodList.filter((food) => quantities[food.id] > 0);
@@ -17,6 +18,9 @@ const PlaceOrder = () => {
     0
   );
   const shipping = subtotal === 0 ? 0.0 : 10;
+  const tax = subtotal * 0.1;
+  const total = subtotal + shipping + tax;
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -29,11 +33,20 @@ const PlaceOrder = () => {
     zip: "",
   });
 
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    } else if (cartItems.length === 0) {
+      navigate('/cart');
+    }
+  }, [token, cartItems, navigate]);
+
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setData((data) => ({ ...data, [name]: value }));
   };
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const orderData = {
@@ -68,7 +81,6 @@ const PlaceOrder = () => {
     } catch (error) {
       toast.error("Some Error in Server. Please try after some time..");
     }
-    console.log(orderData);
   };
 
   const intiateRazorPayPayment = (order) => {
@@ -76,7 +88,7 @@ const PlaceOrder = () => {
       key: RAZORPAY_KEY,
       amount: order.amount * 100,
       currency: "INR",
-      name: "Food Land",
+      name: "Foodingo",
       description: "Food order payment",
       order_id: order.razorpayOrderId,
       handler: async function (razorpayResponse) {
@@ -87,7 +99,7 @@ const PlaceOrder = () => {
         email: data.email,
         contact: data.phoneNumber,
       },
-      theme: { color: "#3399cc" },
+      theme: { color: "#ff6347" },
       modal: {
         ondismiss: async function () {
           toast.error("Payment cancelled.");
@@ -112,14 +124,13 @@ const PlaceOrder = () => {
         paymentData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("I got resp", response);
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         toast.success("Payment Successful.");
         await clearCart();
         navigate("/myorders");
       } else {
-        toast.error("Payment Failed.Please try again...");
+        toast.error("Payment Failed. Please try again...");
         navigate("/");
       }
     } catch (error) {
@@ -128,271 +139,132 @@ const PlaceOrder = () => {
   };
 
   const deleteOrder = async (orderId) => {
-    console.log(orderId);
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `${APP_URL}/api/orders/${orderId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
     } catch (error) {
-      toast.error("order not deleted");
+      console.error("Error deleting order:", error);
     }
   };
 
   const clearCart = async () => {
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `${APP_URL}/api/cart/delete`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setQuantities({});
     } catch (error) {
-      toast.error("error while clearing the cart");
+      toast.error("Error while clearing the cart");
     }
   };
 
-  const tax = subtotal * 0.1;
-  const total = subtotal + shipping + tax;
   return (
-    <div class="container mt-3 ">
-      <div class="row g-5">
-        <div class="col-md-5 col-lg-4 order-md-last">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-primary">Order Summary</span>
-            <span class="badge bg-primary rounded-pill">
-              {cartItems.length}
-            </span>
-          </h4>
-          <ul class="list-group mb-3">
-            {cartItems.map((item, index) => (
-              <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 class="my-0">{item.name}</h6>
-                  <small class="text-body-secondary">
-                    Qty: {quantities[item.id]}
-                  </small>
-                </div>
-                <span class="text-body-secondary">
-                  {" "}
-                  &#8377;{item.price * quantities[item.id]}
-                </span>
-              </li>
-            ))}
-            <li class="list-group-item d-flex justify-content-between">
-              <span c>Shipping</span>
-              <strong>&#8377;{shipping}</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Tax</span>
-              <strong>&#8377;{tax}</strong>
-            </li>
-
-            <li class="list-group-item d-flex justify-content-between">
-              <strong>Total (INR)</strong>
-              <strong>&#8377; {total}</strong>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">Billing address</h4>
-          <form
-            onSubmit={(event) => onSubmitHandler(event)}
-            class="needs-validation"
-            novalidate
-          >
-            <div class="row g-3">
-              <div class="col-sm-6">
-                <label for="firstName" class="form-label">
-                  First name
-                </label>
-                <input
-                  onChange={onChangeHandler}
-                  type="text"
-                  name="firstName"
-                  class="form-control"
-                  id="firstName"
-                  value={data.firstName}
-                  placeholder="John"
-                />
-                <div class="invalid-feedback">
-                  Valid first name is required.
-                </div>
+    <div className="container py-8 px-4 md:px-8">
+      <h1 className="text-3xl font-bold font-heading mb-8 flex items-center gap-3">
+        <CreditCard className="text-primary" size={32} />
+        Checkout
+      </h1>
+      <form onSubmit={onSubmitHandler} className="flex flex-col lg:flex-row gap-8">
+        <div className="flex-1">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
+            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <MapPin size={20} className="text-gray-500" />
+              Delivery Information
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">First Name</label>
+                <input required name="firstName" onChange={onChangeHandler} value={data.firstName} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="John" />
               </div>
-
-              <div class="col-sm-6">
-                <label for="lastName" class="form-label">
-                  Last name
-                </label>
-                <input
-                  name="lastName"
-                  value={data.lastName}
-                  onChange={onChangeHandler}
-                  type="text"
-                  class="form-control"
-                  id="lastName"
-                  placeholder="Doe"
-                  required
-                />
-                <div class="invalid-feedback">Valid last name is required.</div>
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Last Name</label>
+                <input required name="lastName" onChange={onChangeHandler} value={data.lastName} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Doe" />
               </div>
-
-              <div class="col-12">
-                <label for="email" class="form-label">
-                  Email
-                </label>
-                <div class="input-group has-validation">
-                  <span class="input-group-text">@</span>
-                  <input
-                    name="email"
-                    value={data.email}
-                    onChange={onChangeHandler}
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="you@gmail.com"
-                    required
-                  />
-                  <div class="invalid-feedback">Your username is required.</div>
-                </div>
+              <div className="md:col-span-2 space-y-1">
+                <label className="text-sm font-medium text-gray-700">Email Address</label>
+                <input required name="email" onChange={onChangeHandler} value={data.email} type="email" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="john@example.com" />
               </div>
-
-              <div class="col-12">
-                <label for="phone" class="form-label">
-                  Phone Number<span class="text-body-secondary"></span>
-                </label>
-                <input
-                  name="phoneNumber"
-                  value={data.phoneNumber}
-                  onChange={onChangeHandler}
-                  type="number"
-                  class="form-control"
-                  id="phone"
-                  placeholder="Enter phone number..."
-                />
+              <div className="md:col-span-2 space-y-1">
+                <label className="text-sm font-medium text-gray-700">Phone Number</label>
+                <input required name="phoneNumber" onChange={onChangeHandler} value={data.phoneNumber} type="number" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="+91" />
               </div>
-              <div class="col-12">
-                <label for="address" class="form-label">
-                  Address
-                </label>
-                <input
-                  value={data.address}
-                  name="address"
-                  onChange={onChangeHandler}
-                  type="text"
-                  class="form-control"
-                  id="address"
-                  placeholder="1234 Main St"
-                  required
-                />
-                <div class="invalid-feedback">
-                  Please enter your shipping address.
-                </div>
+              <div className="md:col-span-2 space-y-1">
+                <label className="text-sm font-medium text-gray-700">Street Address</label>
+                <input required name="address" onChange={onChangeHandler} value={data.address} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="1234 Main St" />
               </div>
-
-              <div class="col-md-3">
-                <label for="country" class="form-label">
-                  Country
-                </label>
-                <select
-                  class="form-select"
-                  id="country"
-                  required
-                  name="country"
-                  value={data.country}
-                  onChange={onChangeHandler}
-                >
-                  <option value="">Choose...</option>
-                  <option value={"India"}>India</option>
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">City</label>
+                <select required name="city" onChange={onChangeHandler} value={data.city} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-white">
+                  <option value="">Select City</option>
+                  <option value="Bhopal">Bhopal</option>
+                  <option value="Indore">Indore</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Bangalore">Bangalore</option>
                 </select>
-                <div class="invalid-feedback">
-                  Please select a valid country.
-                </div>
               </div>
-
-              <div class="col-md-3">
-                <label for="state" class="form-label">
-                  State
-                </label>
-                <select
-                  class="form-select"
-                  id="state"
-                  required
-                  name="state"
-                  value={data.state}
-                  onChange={onChangeHandler}
-                >
-                  <option value="">Choose...</option>
-                  <option value={"Madhya Pradesh"}>Madhya Pradesh</option>
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">State</label>
+                <select required name="state" onChange={onChangeHandler} value={data.state} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-white">
+                  <option value="">Select State</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Karnataka">Karnataka</option>
                 </select>
-                <div class="invalid-feedback">
-                  Please provide a valid state.
-                </div>
               </div>
-
-              <div class="col-md-3">
-                <label for="city" class="form-label">
-                  City
-                </label>
-                <select
-                  class="form-select"
-                  id="city"
-                  required
-                  name="city"
-                  value={data.city}
-                  onChange={onChangeHandler}
-                >
-                  <option value="">Choose...</option>
-                  <option value={"Bhopal"}>Bhopal</option>
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Zip Code</label>
+                <input required name="zip" onChange={onChangeHandler} value={data.zip} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="462001" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Country</label>
+                <select required name="country" onChange={onChangeHandler} value={data.country} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-white">
+                  <option value="India">India</option>
                 </select>
-                <div class="invalid-feedback">
-                  Please provide a valid state.
-                </div>
-              </div>
-
-              <div class="col-md-3">
-                <label for="zip" class="form-label">
-                  Zip
-                </label>
-                <input
-                  name="zip"
-                  value={data.zip}
-                  onChange={onChangeHandler}
-                  type="text"
-                  class="form-control"
-                  id="zip"
-                  placeholder=""
-                />
-                <div class="invalid-feedback">Zip code required.</div>
               </div>
             </div>
-
-            <hr class="my-4" />
-
-            <button
-              disabled={cartItems.length == 0}
-              class="w-100 btn btn-primary btn-lg"
-              type="submit"
-            >
-              Continue to checkout
-            </button>
-          </form>
+          </div>
         </div>
-      </div>
 
-      <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-        <p class="mb-1">&copy; 2017–2025 Company Name</p>
-        <ul class="list-inline">
-          <li class="list-inline-item">
-            <a href="#">Privacy</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">Terms</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">Support</a>
-          </li>
-        </ul>
-      </footer>
+        <div className="lg:w-96">
+          <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-24">
+            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <Truck size={20} className="text-gray-500" />
+              Order Summary
+            </h2>
+            <div className="space-y-4 mb-6">
+              <div className="flex justify-between text-gray-600">
+                <span>Items ({cartItems.length})</span>
+                <span>₹{subtotal}</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>Shipping</span>
+                <span>₹{shipping}</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>Tax (10%)</span>
+                <span>₹{tax.toFixed(2)}</span>
+              </div>
+              <div className="h-px bg-gray-100 my-4"></div>
+              <div className="flex justify-between text-xl font-bold text-gray-900">
+                <span>Total</span>
+                <span>₹{total.toFixed(2)}</span>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-[1.02] transition-all active:scale-95 flex items-center justify-center gap-2"
+            >
+              Proceed to Payment
+            </button>
+            <p className="text-xs text-center text-gray-400 mt-4">Safe and secure payments via Razorpay</p>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
