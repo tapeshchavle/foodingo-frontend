@@ -1,10 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Gupter:wght@400;500;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
-body{
-  font-family: 'poppins',sans-serif !important;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+
+@theme {
+  --color-primary: #ff6347;
+  --color-secondary: #2d3748;
+  --color-glass: rgba(255, 255, 255, 0.1);
+
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Dark Mode Overrides */
+:root.dark {
+  --color-secondary: #f7fafc;
+  --color-glass: rgba(0, 0, 0, 0.4);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+@layer base {
+  body {
+    @apply font-sans antialiased text-gray-800 bg-gray-50 transition-colors duration-300;
+  }
+
+  :root.dark body {
+    @apply text-gray-100 bg-gray-900;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
 }
