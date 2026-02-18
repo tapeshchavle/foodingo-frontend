@@ -1,0 +1,7 @@
+{
+  "appId": "com.tapesh.foodingo",
+  "appName": "foodingo-frontend","webDir": "dist",
+  "server": {
+    "hostname": "app.foodingo.com"
+  }
+}
