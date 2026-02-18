@@ -163,41 +163,41 @@ const PlaceOrder = () => {
 
   return (
     <div className="container py-8 px-4 md:px-8">
-      <h1 className="text-3xl font-bold font-heading mb-8 flex items-center gap-3">
+      <h1 className="text-3xl font-bold font-heading mb-8 flex items-center gap-3 dark:text-white">
         <CreditCard className="text-primary" size={32} />
         Checkout
       </h1>
       <form onSubmit={onSubmitHandler} className="flex flex-col lg:flex-row gap-8">
         <div className="flex-1">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
-            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <MapPin size={20} className="text-gray-500" />
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 mb-6">
+            <h2 className="text-xl font-bold mb-6 flex items-center gap-2 dark:text-white">
+              <MapPin size={20} className="text-gray-500 dark:text-gray-400" />
               Delivery Information
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">First Name</label>
-                <input required name="firstName" onChange={onChangeHandler} value={data.firstName} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="John" />
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">First Name</label>
+                <input required name="firstName" onChange={onChangeHandler} value={data.firstName} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-gray-400" placeholder="John" />
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Last Name</label>
-                <input required name="lastName" onChange={onChangeHandler} value={data.lastName} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Doe" />
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
+                <input required name="lastName" onChange={onChangeHandler} value={data.lastName} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-gray-400" placeholder="Doe" />
               </div>
               <div className="md:col-span-2 space-y-1">
-                <label className="text-sm font-medium text-gray-700">Email Address</label>
-                <input required name="email" onChange={onChangeHandler} value={data.email} type="email" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="john@example.com" />
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</label>
+                <input required name="email" onChange={onChangeHandler} value={data.email} type="email" className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-gray-400" placeholder="john@example.com" />
               </div>
               <div className="md:col-span-2 space-y-1">
-                <label className="text-sm font-medium text-gray-700">Phone Number</label>
-                <input required name="phoneNumber" onChange={onChangeHandler} value={data.phoneNumber} type="number" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="+91" />
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Phone Number</label>
+                <input required name="phoneNumber" onChange={onChangeHandler} value={data.phoneNumber} type="number" className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-gray-400" placeholder="+91" />
               </div>
               <div className="md:col-span-2 space-y-1">
-                <label className="text-sm font-medium text-gray-700">Street Address</label>
-                <input required name="address" onChange={onChangeHandler} value={data.address} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="1234 Main St" />
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Street Address</label>
+                <input required name="address" onChange={onChangeHandler} value={data.address} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-gray-400" placeholder="1234 Main St" />
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">City</label>
-                <select required name="city" onChange={onChangeHandler} value={data.city} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-white">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">City</label>
+                <select required name="city" onChange={onChangeHandler} value={data.city} className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
                   <option value="">Select City</option>
                   <option value="Bhopal">Bhopal</option>
                   <option value="Indore">Indore</option>
@@ -207,8 +207,8 @@ const PlaceOrder = () => {
                 </select>
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">State</label>
-                <select required name="state" onChange={onChangeHandler} value={data.state} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-white">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">State</label>
+                <select required name="state" onChange={onChangeHandler} value={data.state} className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
                   <option value="">Select State</option>
                   <option value="Madhya Pradesh">Madhya Pradesh</option>
                   <option value="Maharashtra">Maharashtra</option>
@@ -217,12 +217,12 @@ const PlaceOrder = () => {
                 </select>
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Zip Code</label>
-                <input required name="zip" onChange={onChangeHandler} value={data.zip} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="462001" />
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Zip Code</label>
+                <input required name="zip" onChange={onChangeHandler} value={data.zip} type="text" className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-gray-400" placeholder="462001" />
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Country</label>
-                <select required name="country" onChange={onChangeHandler} value={data.country} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-white">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Country</label>
+                <select required name="country" onChange={onChangeHandler} value={data.country} className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
                   <option value="India">India</option>
                 </select>
               </div>
@@ -231,26 +231,26 @@ const PlaceOrder = () => {
         </div>
 
         <div className="lg:w-96">
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-24">
-            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <Truck size={20} className="text-gray-500" />
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 sticky top-24">
+            <h2 className="text-xl font-bold mb-6 flex items-center gap-2 dark:text-white">
+              <Truck size={20} className="text-gray-500 dark:text-gray-400" />
               Order Summary
             </h2>
             <div className="space-y-4 mb-6">
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-gray-600 dark:text-gray-400">
                 <span>Items ({cartItems.length})</span>
                 <span>₹{subtotal}</span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-gray-600 dark:text-gray-400">
                 <span>Shipping</span>
                 <span>₹{shipping}</span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-gray-600 dark:text-gray-400">
                 <span>Tax (10%)</span>
                 <span>₹{tax.toFixed(2)}</span>
               </div>
-              <div className="h-px bg-gray-100 my-4"></div>
-              <div className="flex justify-between text-xl font-bold text-gray-900">
+              <div className="h-px bg-gray-100 dark:bg-gray-700 my-4"></div>
+              <div className="flex justify-between text-xl font-bold text-gray-900 dark:text-white">
                 <span>Total</span>
                 <span>₹{total.toFixed(2)}</span>
               </div>
@@ -261,7 +261,7 @@ const PlaceOrder = () => {
             >
               Proceed to Payment
             </button>
-            <p className="text-xs text-center text-gray-400 mt-4">Safe and secure payments via Razorpay</p>
+            <p className="text-xs text-center text-gray-400 dark:text-gray-500 mt-4">Safe and secure payments via Razorpay</p>
           </div>
         </div>
       </form>

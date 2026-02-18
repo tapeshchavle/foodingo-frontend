@@ -1,5 +1,6 @@
 import React from 'react';
 import Menubar from '../menubar/Menubar';
+import BottomCart from '../BottomCart/BottomCart';
 
 const Layout = ({ children }) => {
     return (
@@ -18,6 +19,7 @@ const Layout = ({ children }) => {
                     </div>
                 </div>
             </footer>
+            <BottomCart />
         </div>
     );
 };

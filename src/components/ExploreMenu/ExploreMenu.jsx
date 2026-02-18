@@ -31,7 +31,7 @@ const ExploreMenu = ({ category, setCategory }) => {
             </div>
 
             <div
-                className="flex gap-3 md:gap-8 overflow-x-auto pb-4 md:pb-8 pt-2 md:pt-4 scrollbar-hide snap-x snap-mandatory"
+                className="flex gap-2 md:gap-8 overflow-x-auto pb-4 md:pb-8 pt-2 md:pt-4 scrollbar-hide snap-x snap-mandatory px-2 md:px-0"
                 ref={menuRef}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >

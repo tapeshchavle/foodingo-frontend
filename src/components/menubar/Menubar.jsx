@@ -43,8 +43,8 @@ const Menubar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-glass py-3"
-          : "bg-transparent py-5"
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-glass pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-3"
+          : "bg-transparent pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-5"
           }`}
       >
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
@@ -122,14 +122,6 @@ const Menubar = () => {
 
           {/* Mobile Toggle */}
           <div className="flex md:hidden items-center gap-4">
-            <Link to="/cart" className="relative p-2 text-gray-700 dark:text-gray-300">
-              <ShoppingCart size={24} />
-              {count > 0 && (
-                <span className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
-                  {count}
-                </span>
-              )}
-            </Link>
             <button
               onClick={toggleTheme}
               className="p-2 text-gray-700 dark:text-gray-300"
