@@ -11,9 +11,9 @@ const FoodDisplay = ({ category, searchText }) => {
   ));
 
   return (
-    <section className="container py-8 px-4 md:px-8" id="food-display">
+    <section className="container py-4 md:py-8 px-4 md:px-8" id="food-display">
       <h2 className="text-2xl font-bold font-heading mb-6 md:mb-8 text-gray-800 dark:text-white">Top dishes near you</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-8">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6 gap-y-8">
         <AnimatePresence mode="popLayout">
           {filterFoods.length > 0 ? (
             filterFoods.map((item, index) => {

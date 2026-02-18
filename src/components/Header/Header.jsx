@@ -9,7 +9,7 @@ const Header = () => {
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
-      <div className="container relative z-10 px-6 py-20 md:py-32 flex flex-col items-start justify-center min-h-[500px]">
+      <div className="container relative z-10 px-6 py-10 md:py-32 flex flex-col items-start justify-center min-h-[350px] md:min-h-[500px]">
         <motion.span
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ const Header = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-5xl md:text-7xl font-bold font-heading leading-tight mb-6 max-w-3xl"
+          className="text-4xl md:text-7xl font-bold font-heading leading-tight mb-6 max-w-3xl"
         >
           Order Your <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">Favourite Food</span> Here
@@ -44,12 +44,12 @@ const Header = () => {
           transition={{ delay: 0.8 }}
           className="flex gap-4"
         >
-          <Link to='/explore-foods' className="group relative px-8 py-4 bg-white text-gray-900 rounded-full font-bold text-lg overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-lg hover:shadow-white/20">
+          <Link to='/explore-foods' className="group relative px-6 py-3 md:px-8 md:py-4 bg-white text-gray-900 rounded-full font-bold text-sm md:text-lg overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-lg hover:shadow-white/20">
             <span className="relative z-10 flex items-center gap-2">
-              Order Now <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              Order Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform md:w-5 md:h-5" />
             </span>
           </Link>
-          <Link to='/contact' className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full font-bold text-lg text-white transition-all hover:bg-white/20 hover:scale-105 active:scale-95">
+          <Link to='/contact' className="px-6 py-3 md:px-8 md:py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full font-bold text-sm md:text-lg text-white transition-all hover:bg-white/20 hover:scale-105 active:scale-95">
             View Menu
           </Link>
         </motion.div>

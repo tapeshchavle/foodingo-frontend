@@ -122,6 +122,14 @@ const Menubar = () => {
 
           {/* Mobile Toggle */}
           <div className="flex md:hidden items-center gap-4">
+            <Link to="/cart" className="relative p-2 text-gray-700 dark:text-gray-300">
+              <ShoppingCart size={24} />
+              {count > 0 && (
+                <span className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                  {count}
+                </span>
+              )}
+            </Link>
             <button
               onClick={toggleTheme}
               className="p-2 text-gray-700 dark:text-gray-300"
@@ -141,43 +149,73 @@ const Menubar = () => {
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-white dark:bg-gray-900 pt-24 px-6 md:hidden text-center"
-          >
-            <div className="flex flex-col gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 z-[60] bg-black/20 backdrop-blur-sm md:hidden"
+            />
+
+            {/* Sidebar */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 z-[70] w-[75%] max-w-xs bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-2xl md:hidden flex flex-col"
+            >
+              {/* Header */}
+              <div className="p-6 flex justify-between items-center border-b border-gray-100 dark:border-gray-800">
+                <span className="text-xl font-bold font-heading text-primary">Foodingo</span>
+                <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-2xl font-bold flex items-center justify-center gap-4 ${location.pathname === link.path ? "text-primary" : "text-gray-800 dark:text-gray-200"
-                    }`}
+                  className="p-2 -mr-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
                 >
-                  <link.icon size={28} />
-                  {link.name}
-                </Link>
-              ))}
-              <hr className="border-gray-100 dark:border-gray-800" />
-              {!token ? (
-                <div className="flex flex-col gap-4">
-                  <button onClick={() => { navigate('/login'); setIsMobileMenuOpen(false) }} className="w-full py-3 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-lg text-gray-700 dark:text-gray-200">
-                    Login
-                  </button>
-                  <button onClick={() => { navigate('/register'); setIsMobileMenuOpen(false) }} className="w-full py-3 rounded-xl bg-primary text-white font-bold text-lg shadow-lg shadow-orange-500/30">
-                    Register
-                  </button>
-                </div>
-              ) : (
-                <button onClick={() => { logout(); setIsMobileMenuOpen(false) }} className="flex items-center justify-center gap-4 text-red-500 font-bold text-xl">
-                  <LogOut size={24} />
-                  Logout
+                  <X size={24} />
                 </button>
-              )}
-            </div>
-          </motion.div>
+              </div>
+
+              {/* Body */}
+              <div className="flex-1 overflow-y-auto py-6 px-6 flex flex-col gap-2">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all ${location.pathname === link.path
+                      ? "bg-primary/10 text-primary font-bold"
+                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                      }`}
+                  >
+                    <link.icon size={20} />
+                    <span className="text-lg">{link.name}</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Footer */}
+              <div className="p-6 border-t border-gray-100 dark:border-gray-800">
+                {!token ? (
+                  <div className="flex flex-col gap-3">
+                    <button onClick={() => { navigate('/login'); setIsMobileMenuOpen(false) }} className="w-full py-3 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                      Login
+                    </button>
+                    <button onClick={() => { navigate('/register'); setIsMobileMenuOpen(false) }} className="w-full py-3 rounded-xl bg-primary text-white font-bold shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition-colors">
+                      Register
+                    </button>
+                  </div>
+                ) : (
+                  <button onClick={() => { logout(); setIsMobileMenuOpen(false) }} className="w-full py-3 flex items-center justify-center gap-2 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-500 font-bold hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+                    <LogOut size={20} />
+                    Logout
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
