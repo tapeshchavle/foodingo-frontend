@@ -4,6 +4,10 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom';
 import { StoreContextProvider } from './context/StoreContext.jsx';
+// Configure StatusBar for mobile app - Moved to App.jsx
+if (window.Capacitor) {
+  // Logic handled in App.jsx
+}
 
 createRoot(document.getElementById('root')).render(
 
