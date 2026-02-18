@@ -77,22 +77,22 @@ const FoodDetails = () => {
                         </p>
                     </div>
 
-                    <div className="flex items-center justify-between p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                        <span className="text-3xl font-bold text-gray-900">₹{food.price}</span>
+                    <div className="flex items-center justify-between p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
+                        <span className="text-3xl font-bold text-gray-900 dark:text-white">₹{food.price}</span>
 
                         <div className="flex items-center gap-4">
                             {qty > 0 ? (
-                                <div className="flex items-center gap-4 bg-white rounded-full px-2 py-1 shadow-sm border border-gray-100">
+                                <div className="flex items-center gap-4 bg-white dark:bg-gray-900 rounded-full px-2 py-1 shadow-sm border border-gray-100 dark:border-gray-700">
                                     <button
                                         onClick={() => decreaseQty(id)}
-                                        className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-red-50 hover:text-red-500 transition-colors"
+                                        className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-500 dark:text-gray-200 transition-colors"
                                     >
                                         <Minus size={20} />
                                     </button>
-                                    <span className="font-bold text-xl w-8 text-center">{qty}</span>
+                                    <span className="font-bold text-xl w-8 text-center text-gray-800 dark:text-gray-200">{qty}</span>
                                     <button
                                         onClick={() => increaseQty(id)}
-                                        className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-green-50 hover:text-green-500 transition-colors"
+                                        className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-green-50 dark:hover:bg-green-900/30 hover:text-green-500 dark:text-gray-200 transition-colors"
                                     >
                                         <Plus size={20} />
                                     </button>

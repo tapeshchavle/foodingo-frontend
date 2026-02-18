@@ -14,7 +14,7 @@ const ExploreMenu = ({ category, setCategory }) => {
     }
 
     return (
-        <section className="container py-12 px-4 md:px-8 flex flex-col gap-6" id="explore-menu">
+        <section className="container py-6 md:py-12 px-4 md:px-8 flex flex-col gap-6" id="explore-menu">
             <div className="flex justify-between items-end">
                 <div>
                     <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3 text-gray-900 dark:text-white">Explore Our Menu</h2>
@@ -31,7 +31,7 @@ const ExploreMenu = ({ category, setCategory }) => {
             </div>
 
             <div
-                className="flex gap-8 overflow-x-auto pb-8 pt-4 scrollbar-hide snap-x snap-mandatory"
+                className="flex gap-3 md:gap-8 overflow-x-auto pb-4 md:pb-8 pt-2 md:pt-4 scrollbar-hide snap-x snap-mandatory"
                 ref={menuRef}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
@@ -40,24 +40,24 @@ const ExploreMenu = ({ category, setCategory }) => {
                     return (
                         <div
                             key={index}
-                            className="flex-shrink-0 flex flex-col items-center gap-4 cursor-pointer snap-start group"
+                            className="flex-shrink-0 flex flex-col items-center gap-2 md:gap-4 cursor-pointer snap-start group"
                             onClick={() => setCategory(prev => prev === item.role ? 'All' : item.role)}
                         >
                             <div className={`
-                                relative w-24 h-24 md:w-32 md:h-32 rounded-full p-1 transition-all duration-300
+                                relative w-20 h-20 md:w-32 md:h-32 rounded-full p-1 transition-all duration-300 overflow-hidden
                                 ${isActive ? 'bg-gradient-to-tr from-primary to-orange-400 shadow-lg scale-105' : 'bg-transparent group-hover:bg-gray-100 dark:group-hover:bg-gray-800'}
                             `}>
                                 <img
                                     src={item.url}
                                     className={`
-                                        w-full h-full object-cover rounded-full border-4 transition-all duration-300
+                                        w-full h-full object-cover object-top rounded-full border-2 md:border-4 transition-all duration-300 scale-150
                                         ${isActive ? 'border-white dark:border-gray-900' : 'border-transparent group-hover:border-white dark:group-hover:border-gray-700'}
                                     `}
                                     alt={item.role}
                                 />
                             </div>
                             <p className={`
-                                text-lg font-medium transition-colors
+                                text-xs md:text-lg font-medium transition-colors text-center max-w-[80px] md:max-w-none
                                 ${isActive ? 'text-primary font-bold' : 'text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'}
                             `}>
                                 {item.role}
