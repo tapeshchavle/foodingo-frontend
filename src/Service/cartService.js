@@ -1,36 +1,36 @@
-import axios from "axios";
-const APP_URL = "https://foodingo-api-awasc8h4d7d7cmft.centralindia-01.azurewebsites.net";
+import { api } from "../config/api.js";
+
 export const addFood = async (foodId, jwt) => {
-  const response = await axios.post(
-    `${APP_URL}/api/cart`,
+  await api.post(
+    "/api/cart",
     { foodId },
     { headers: { Authorization: `Bearer ${jwt}` } }
   );
 };
 
 export const decFoodQty = async (foodId, jwt) => {
-  const response = await axios.post(
-    `${APP_URL}/api/cart/remove`,
+  await api.post(
+    "/api/cart/remove",
     { foodId },
     { headers: { Authorization: `Bearer ${jwt}` } }
   );
 };
 
 export const deleteCart = async (jwt) => {
-  const response = await axios.delete(`${APP_URL}/api/cart/delete`, {
+  await api.delete("/api/cart/delete", {
     headers: { Authorization: `Bearer ${jwt}` },
   });
 };
 
 export const loadCart = async (token) => {
-  const response = await axios.get(`${APP_URL}/api/cart`, {
+  const response = await api.get("/api/cart", {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response;
 };
 
 export const delteItemFromCart = async (jwt) => {
-  const response = await axios.delete(`${APP_URL}/api/cart/delete-cart`, {
+  await api.delete("/api/cart/delete-cart", {
     headers: { Authorization: `Bearer ${jwt}` },
   });
 };
