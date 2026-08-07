@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { StoreContext } from "../../context/StoreContext";
-import axios from "axios";
+import { api } from "../../config/api.js";
 import { toast } from "react-toastify";
 import { RAZORPAY_KEY } from "../../util/constants.js";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ const PlaceOrder = () => {
   const { foodList, quantities, setQuantities } = useContext(StoreContext);
   const cartItems = foodList.filter((food) => quantities[food.id] > 0);
   const token = localStorage.getItem("token");
-  const APP_URL = "https://foodingo-api-awasc8h4d7d7cmft.centralindia-01.azurewebsites.net";
   const navigate = useNavigate();
 
   const subtotal = cartItems.reduce(
@@ -67,8 +66,8 @@ const PlaceOrder = () => {
     };
 
     try {
-      const res = await axios.post(
-        `${APP_URL}/api/orders/create`,
+      const res = await api.post(
+        "/api/orders/create",
         orderData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -119,8 +118,8 @@ const PlaceOrder = () => {
       razorpay_signature: razorpayResponse.razorpay_signature,
     };
     try {
-      const response = await axios.post(
-        `${APP_URL}/api/orders/verify`,
+      const response = await api.post(
+        "/api/orders/verify",
         paymentData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -140,10 +139,9 @@ const PlaceOrder = () => {
 
   const deleteOrder = async (orderId) => {
     try {
-      await axios.delete(
-        `${APP_URL}/api/orders/${orderId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await api.delete(`/api/orders/${orderId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     } catch (error) {
       console.error("Error deleting order:", error);
     }
@@ -151,10 +149,9 @@ const PlaceOrder = () => {
 
   const clearCart = async () => {
     try {
-      await axios.delete(
-        `${APP_URL}/api/cart/delete`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await api.delete("/api/cart/delete", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setQuantities({});
     } catch (error) {
       toast.error("Error while clearing the cart");
